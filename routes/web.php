@@ -25,12 +25,15 @@ Route::get('/dashboard', function () {
 
 Route::get('hello-world', [HomeController::class, 'index'])->name('home.index');
 
-Route::get('/post/novo', [PostController::class, 'new_post']);
+Route::get('/post/novo', [PostController::class, 'new_post'])->middleware('auth');
 
 Route::get('/post/{id}', [PostController::class, 'getById']);
 Route::get('/posts', [PostController::class, 'getAll']);
-Route::post('/post/criar', [PostController::class, 'createclear'])->name('novo_post');
+Route::post('/post/criar', [PostController::class, 'create'])->name('novo_post');
 // Route::put('/post/atualizar/{id}', [PostController::class, 'update']);
 // Route::delete('/post/deletar/{id}', [PostController::class, 'delete']);
+
+Route::get('/post/{id}', [PostController::class, 'edit'])->name('post.edit');
+Route::put('/post/{id}', [PostController::class, 'update'])->name('post.update');
 
 require __DIR__.'/auth.php';
