@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -27,13 +28,22 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function create(Request $request) {
+    public function create(PostRequest $request) {
+
         $novo_post = new Post();
         $novo_post->title = $request->title;
         $novo_post->text = $request->text;
-        $novo_post->user_id = $request->user_id;
+        $novo_post->user_id = auth()->user()->id;
         
         dd($novo_post->save());
+    }
+
+    public function edit($id) 
+    {
+        $post =  Post::find($id);
+        $this->authorize('edit', $post);
+
         
+        return view('posts.edit', compact('post'));
     }
 }

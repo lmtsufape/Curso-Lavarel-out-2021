@@ -12,6 +12,16 @@
     <form action="{{route('novo_post')}}" method="post">
         @csrf
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <label for="title"> Titulo </label>
         <input type="text" name="title" id="title">
 
@@ -22,8 +32,8 @@
 
         </br>
 
-        <label for="user_id"> ID_USUARIO </label>
-        <input type="user_id" name="user_id" id="title">
+        {{-- <label for="user_id"> ID_USUARIO </label>
+        <input type="user_id" name="user_id" id="title"> --}}
 
         </br>
         <input type="submit" value="Enviar">
